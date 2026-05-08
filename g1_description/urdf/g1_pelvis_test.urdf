@@ -1,0 +1,33 @@
+<robot name="g1_test">
+
+  <link name="world"/>
+  <joint name="fixed_base" type="fixed">
+    <parent link="world"/>
+    <child link="pelvis"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="pelvis">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="3.813"/>
+      <inertia ixx="0.010549" ixy="0" ixz="0" iyy="0.0093089" iyz="0" izz="0.0079184"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="/home/hitech/work/code/g1_robot_ws/src/g1_description/meshes/pelvis.STL"/>
+      </geometry>
+      <material name="dark">
+        <color rgba="0.2 0.2 0.2 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="/home/hitech/work/code/g1_robot_ws/src/g1_description/meshes/pelvis.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+</robot>

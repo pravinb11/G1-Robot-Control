@@ -1,0 +1,69 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 200
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    effort_controller:
+      type: effort_controllers/JointGroupEffortController
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+effort_controller:
+  ros__parameters:
+    joints:
+      - left_hip_pitch_joint
+      - left_hip_roll_joint
+      - left_hip_yaw_joint
+      - left_knee_joint
+      - left_ankle_pitch_joint
+      - left_ankle_roll_joint
+      - right_hip_pitch_joint
+      - right_hip_roll_joint
+      - right_hip_yaw_joint
+      - right_knee_joint
+      - right_ankle_pitch_joint
+      - right_ankle_roll_joint
+      - waist_yaw_joint
+
+joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - left_hip_pitch_joint
+      - left_hip_roll_joint
+      - left_hip_yaw_joint
+      - left_knee_joint
+      - left_ankle_pitch_joint
+      - left_ankle_roll_joint
+      - right_hip_pitch_joint
+      - right_hip_roll_joint
+      - right_hip_yaw_joint
+      - right_knee_joint
+      - right_ankle_pitch_joint
+      - right_ankle_roll_joint
+      - waist_yaw_joint          # add this back
+    command_interfaces: [position]
+    state_interfaces:   [position, velocity]
+    allow_partial_joints_goal: true
+    open_loop_control: false      # CRITICAL: switch to closed-loop
+    gains:
+      # Hip joints — heavy load, need high P
+      left_hip_pitch_joint:  { p: 300.0, i: 0.0, d: 15.0, i_clamp: 0.0 }
+      left_hip_roll_joint:   { p: 200.0, i: 0.0, d: 10.0, i_clamp: 0.0 }
+      left_hip_yaw_joint:    { p: 200.0, i: 0.0, d: 10.0, i_clamp: 0.0 }
+      # Knee — high load, buckling risk if P too low
+      left_knee_joint:       { p: 300.0, i: 0.0, d: 15.0, i_clamp: 0.0 }
+      # Ankle — low effort limit (35 Nm), keep P moderate
+      left_ankle_pitch_joint: { p: 80.0,  i: 0.0, d: 5.0,  i_clamp: 0.0 }
+      left_ankle_roll_joint:  { p: 50.0,  i: 0.0, d: 3.0,  i_clamp: 0.0 }
+      # Mirror for right side
+      right_hip_pitch_joint: { p: 300.0, i: 0.0, d: 15.0, i_clamp: 0.0 }
+      right_hip_roll_joint:  { p: 200.0, i: 0.0, d: 10.0, i_clamp: 0.0 }
+      right_hip_yaw_joint:   { p: 200.0, i: 0.0, d: 10.0, i_clamp: 0.0 }
+      right_knee_joint:      { p: 300.0, i: 0.0, d: 15.0, i_clamp: 0.0 }
+      right_ankle_pitch_joint: { p: 80.0, i: 0.0, d: 5.0,  i_clamp: 0.0 }
+      right_ankle_roll_joint:  { p: 50.0, i: 0.0, d: 3.0,  i_clamp: 0.0 }
+      # Waist — low inertia, moderate gains
+      waist_yaw_joint:       { p: 100.0, i: 0.0, d: 5.0,  i_clamp: 0.0 }
