@@ -1,0 +1,59 @@
+# g1_controllers.yaml
+# ───────────────────
+# ros2_control configuration for G1 walking.
+# This file is loaded by controller_manager via the URDF <ros2_control> tag.
+# Adjust joint names to match your exact URDF if they differ.
+
+controller_manager:
+  ros__parameters:
+    update_rate: 200   # Hz — must match control.dt = 0.005 s
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+joint_trajectory_controller:
+  ros__parameters:
+
+    # ── Joint names (must exactly match URDF joint names) ────────────────────
+    joints:
+      - left_hip_yaw_joint
+      - left_hip_roll_joint
+      - left_hip_pitch_joint
+      - left_knee_joint
+      - left_ankle_pitch_joint
+      - left_ankle_roll_joint
+      - right_hip_yaw_joint
+      - right_hip_roll_joint
+      - right_hip_pitch_joint
+      - right_knee_joint
+      - right_ankle_pitch_joint
+      - right_ankle_roll_joint
+
+    # ── Interface types ───────────────────────────────────────────────────────
+    command_interfaces: [position]
+    state_interfaces:   [position, velocity]
+
+    # ── Trajectory execution ──────────────────────────────────────────────────
+    allow_partial_joints_goal:      false
+    open_loop_control:              true    # no feedback correction
+    allow_integration_in_goal_trajectories: true
+
+    # ── Tolerances ────────────────────────────────────────────────────────────
+    constraints:
+      stopped_velocity_tolerance:   0.05    # rad/s
+      goal_time:                    1.0     # s
+      left_hip_yaw_joint:    { trajectory: 0.1, goal: 0.05 }
+      left_hip_roll_joint:   { trajectory: 0.1, goal: 0.05 }
+      left_hip_pitch_joint:  { trajectory: 0.1, goal: 0.05 }
+      left_knee_joint:       { trajectory: 0.1, goal: 0.05 }
+      left_ankle_pitch_joint:{ trajectory: 0.1, goal: 0.05 }
+      left_ankle_roll_joint: { trajectory: 0.1, goal: 0.05 }
+      right_hip_yaw_joint:   { trajectory: 0.1, goal: 0.05 }
+      right_hip_roll_joint:  { trajectory: 0.1, goal: 0.05 }
+      right_hip_pitch_joint: { trajectory: 0.1, goal: 0.05 }
+      right_knee_joint:      { trajectory: 0.1, goal: 0.05 }
+      right_ankle_pitch_joint:{ trajectory: 0.1, goal: 0.05 }
+      right_ankle_roll_joint: { trajectory: 0.1, goal: 0.05 }

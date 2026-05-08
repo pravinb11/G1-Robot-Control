@@ -1,0 +1,18 @@
+# ── GOAL ──────────────────────────────────────────────────────────────
+float64 vx                   # desired COM forward velocity  (m/s)
+float64 vy                   # desired COM lateral velocity  (m/s)
+float64 wz                   # desired yaw rate              (rad/s)
+int32   n_steps              # number of footsteps to plan
+bool    start_from_current   # if true, read foot positions from TF
+---
+# ── RESULT ────────────────────────────────────────────────────────────
+bool                      success
+string                    message
+geometry_msgs/PoseArray   footsteps     # one Pose per step (yaw encoded as quaternion)
+float64[]                 t_start       # step start times (sec)
+float64[]                 t_end         # step end   times (sec)
+int32[]                   foot_id       # 0 = LEFT, 1 = RIGHT
+---
+# ── FEEDBACK ──────────────────────────────────────────────────────────
+int32   steps_planned
+float64 progress              # 0.0 → 1.0

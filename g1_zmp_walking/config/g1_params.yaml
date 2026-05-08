@@ -1,0 +1,66 @@
+/**:
+  ros__parameters:
+
+    # ── TF frame names ────────────────────────────────────────────────────────
+    world_frame:       "odom"
+    left_foot_frame:   "l_ankle_roll_link"
+    right_foot_frame:  "r_ankle_roll_link"
+
+    # ── G1 physical parameters ────────────────────────────────────────────────
+    g1:
+      total_mass:        35.0    # kg
+      com_height:         0.75   # m
+      hip_width:          0.19   # m
+      foot_length:        0.23   # m
+      foot_width:         0.10   # m
+      ankle_height:       0.04   # m
+      thigh_length:       0.20   # m
+      shank_length:       0.20   # m
+      max_step_length:    0.20   # m
+      max_step_width:     0.12   # m
+      max_step_yaw:       0.30   # rad
+      t_single:           0.70   # s
+      t_double:           0.10   # s
+
+    # ── Control timing ────────────────────────────────────────────────────────
+    control:
+      dt:          0.005    # s   200 Hz
+      n_preview:   200      # samples (~1.0 s look-ahead)
+      n_init:      500      # samples before first footstep (~2.5 s settle)
+
+    # ── ZMP Preview Controller weights ───────────────────────────────────────
+    zmp:
+      Qe_scale:    1.0      # ZMP tracking weight (increase → tighter ZMP)
+      lambda_H:   10.0      # HAM penalty  (increase → less angular momentum)
+      R_scale:     1.0e-6   # control effort weight
+
+    # ── RViz2 marker appearance ───────────────────────────────────────────────
+    foot_marker_length:   0.23
+    foot_marker_width:    0.10
+
+    # ── IK Solver ─────────────────────────────────────────────────────────────────
+    # Measure l_thigh, l_shank, com_to_hip_z from your URDF
+    g1:
+      l_thigh:       0.35    # m  hip joint → knee joint
+      l_shank:       0.31    # m  knee joint → ankle joint
+      com_to_hip_z:  0.08    # m  COM → hip joint vertical offset
+
+      # Joint limits (rad) — copy from URDF <limit lower= upper= />
+      limits:
+        hip_yaw_min:      -0.52
+        hip_yaw_max:       0.52
+        hip_roll_min:     -0.70
+        hip_roll_max:      0.70
+        hip_pitch_min:    -1.75
+        hip_pitch_max:     0.60
+        knee_min:          0.00
+        knee_max:          2.50
+        ankle_pitch_min:  -0.87
+        ankle_pitch_max:   0.52
+        ankle_roll_min:   -0.35
+        ankle_roll_max:    0.35
+
+    # ── Swing Foot Trajectory ─────────────────────────────────────────────────────
+    swing:
+      step_height:  0.06     # m   apex height above ground
+      profile:      cubic    # parabolic | cubic (cubic = C1 continuous, recommended)
